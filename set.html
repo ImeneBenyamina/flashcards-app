@@ -4,46 +4,48 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Flashcards Set</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            margin: 20px;
-        }
-        .flashcard-container {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 20px;
-        }
-        .flashcard {
-            width: 200px;
-            height: 150px;
-            margin: 10px;
-            border: 1px solid #333;
-            border-radius: 5px;
-            text-align: center;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
-            cursor: pointer;
-            background-color: #f8f8f8;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            transition: transform 0.3s ease;
-        }
-        .flashcard:hover {
-            transform: scale(1.05);
-        }
-        .hidden {
-            display: none;
-        }
-        h1 {
-            margin-bottom: 20px;
-        }
-    </style>
+        <style>
+    body {
+        font-family: Arial, sans-serif;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin: 20px;
+    }
+    .flashcard-container {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center; /* Centers the flashcards horizontally */
+        gap: 20px;
+    }
+    .flashcard {
+        width: 200px;
+        height: 150px;
+        margin: 10px;
+        border: 1px solid #333;
+        border-radius: 5px;
+        text-align: center;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 20px;
+        cursor: pointer;
+        background-color: #f8f8f8;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease;
+    }
+    .flashcard:hover {
+        transform: scale(1.05);
+    }
+    .hidden {
+        display: none;
+    }
+    h1 {
+        margin-bottom: 20px;
+    }
+</style>
+
+    
 </head>
 <body>
     <h1 id="set-name">Flashcards for Set</h1>
