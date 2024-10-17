@@ -10,17 +10,19 @@ var toggleAnswerButton = document.getElementById('toggleAnswer');
 var xhr = new XMLHttpRequest();
 xhr.open('GET', 'flashcards.json', true);
 xhr.onreadystatechange = function () {
-    if (xhr.readyState === 4 && xhr.status === 200) {
-        try {
-            flashcards = JSON.parse(xhr.responseText);
-            showCard();
-        } catch (error) {
-            questionElement.textContent = "Error parsing flashcards.";
-            console.error('Error parsing JSON:', error);
+    if (xhr.readyState === 4) {
+        if (xhr.status === 200) {
+            try {
+                flashcards = JSON.parse(xhr.responseText);
+                showCard();
+            } catch (error) {
+                questionElement.textContent = "Error parsing flashcards.";
+                console.error('Error parsing JSON:', error);
+            }
+        } else {
+            questionElement.textContent = "Error loading flashcards.";
+            console.error('Error loading flashcards:', xhr.status);
         }
-    } else if (xhr.readyState === 4) {
-        questionElement.textContent = "Error loading flashcards.";
-        console.error('Error loading flashcards:', xhr.status);
     }
 };
 xhr.send();
