@@ -5,15 +5,33 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Flashcards App</title>
     <link rel="stylesheet" href="styles.css">
+    <style>
+        .card {
+            padding: 20px;
+            margin: 10px;
+            border: 1px solid #ccc;
+            display: inline-block;
+            cursor: pointer;
+            border-radius: 5px;
+            text-align: center;
+            background-color: #f9f9f9;
+            transition: background-color 0.3s;
+        }
+
+        .card:hover {
+            background-color: #e0e0e0;
+        }
+    </style>
 </head>
 <body>
     <div class="container">
         <h1>Flashcards</h1>
-        <div id="flashcard">
-            <p id="question">Loading...</p>
+        <div id="flashcard-container"></div>
+        <div id="flashcard" style="margin-top: 20px;">
+            <p id="question">Click on a set to start!</p>
             <p id="answer" class="hidden"></p>
         </div>
-        <button id="next">Next</button>
+        <button id="next">Next Flashcard</button>
         <button id="toggleAnswer">Show Answer</button>
     </div>
 
