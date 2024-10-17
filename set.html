@@ -53,15 +53,15 @@
     <div id="flashcards"></div>
 
     <script>
-        const urlParams = new URLSearchParams(window.location.search);
-        const setName = urlParams.get('set');
+        var urlParams = new URLSearchParams(window.location.search);
+        var setName = urlParams.get('set');
 
-        const xhr = new XMLHttpRequest();
+        var xhr = new XMLHttpRequest();
         xhr.open('GET', 'flashcards.json', true);
         xhr.onreadystatechange = function () {
             if (xhr.readyState === 4 && xhr.status === 200) {
                 try {
-                    const flashcards = JSON.parse(xhr.responseText).sets;
+                    var flashcards = JSON.parse(xhr.responseText).sets;
                     displayFlashcards(flashcards[setName]);
                 } catch (error) {
                     console.error('Error parsing JSON:', error);
@@ -71,22 +71,22 @@
         xhr.send();
 
         function displayFlashcards(cards) {
-            const flashcardsDiv = document.getElementById('flashcards');
+            var flashcardsDiv = document.getElementById('flashcards');
             if (cards) {
-                cards.forEach(card => {
-                    const flashcardContainer = document.createElement('div');
+                cards.forEach(function(card) {
+                    var flashcardContainer = document.createElement('div');
                     flashcardContainer.className = 'flashcard-container';
 
-                    const flashcard = document.createElement('div');
+                    var flashcard = document.createElement('div');
                     flashcard.className = 'flashcard';
 
-                    const front = document.createElement('div');
+                    var front = document.createElement('div');
                     front.className = 'flashcard-front';
-                    front.innerHTML = `<strong>Q:</strong> ${card.question}`;
+                    front.innerHTML = '<strong>Q:</strong> ' + card.question;
 
-                    const back = document.createElement('div');
+                    var back = document.createElement('div');
                     back.className = 'flashcard-back';
-                    back.innerHTML = `<strong>A:</strong> ${card.answer}`;
+                    back.innerHTML = '<strong>A:</strong> ' + card.answer;
 
                     flashcard.appendChild(front);
                     flashcard.appendChild(back);
