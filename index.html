@@ -3,9 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Flashcards App</title>
+    <title>Flashcard Sets</title>
     <link rel="stylesheet" href="styles.css">
     <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f9f9f9;
+        }
         .card {
             padding: 20px;
             margin: 10px;
@@ -14,27 +20,52 @@
             cursor: pointer;
             border-radius: 5px;
             text-align: center;
-            background-color: #f9f9f9;
+            background-color: #fff;
             transition: background-color 0.3s;
+            width: 150px;
+            box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.1);
         }
-
         .card:hover {
             background-color: #e0e0e0;
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>Flashcards</h1>
-        <div id="flashcard-container"></div>
-        <div id="flashcard" style="margin-top: 20px;">
-            <p id="question">Click on a set to start!</p>
-            <p id="answer" class="hidden"></p>
-        </div>
-        <button id="next">Next Flashcard</button>
-        <button id="toggleAnswer">Show Answer</button>
-    </div>
+    <h1>Flashcard Sets</h1>
+    <div id="flashcard-container"></div>
 
-    <script src="app.js"></script>
+    <script>
+        var flashcards = {};
+
+        // Fetch flashcards using XMLHttpRequest
+        var xhr = new XMLHttpRequest();
+        xhr.open('GET', 'flashcards.json', true);
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState === 4 && xhr.status === 200) {
+                try {
+                    flashcards = JSON.parse(xhr.responseText).sets;
+                    displaySets();
+                } catch (error) {
+                    console.error('Error parsing JSON:', error);
+                }
+            } else if (xhr.readyState === 4) {
+                console.error('Error loading flashcards:', xhr.status);
+            }
+        };
+        xhr.send();
+
+        function displaySets() {
+            for (var setName in flashcards) {
+                var card = document.createElement('div');
+                card.className = 'card';
+                card.textContent = setName;
+                card.onclick = function() {
+                    var selectedSetName = this.textContent;
+                    window.location.href = 'set.html?set=' + encodeURIComponent(selectedSetName);
+                };
+                document.getElementById('flashcard-container').appendChild(card);
+            }
+        }
+    </script>
 </body>
 </html>
