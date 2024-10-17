@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Flashcards</title>
+    <title>Flashcards Set</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -13,31 +13,35 @@
             margin: 20px;
         }
         .flashcard-container {
-            perspective: 1000px; /* For 3D effect */
-            margin: 10px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
         }
         .flashcard {
             width: 200px;
             height: 150px;
+            margin: 10px;
+            border: 1px solid #333;
+            border-radius: 5px;
+            text-align: center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
             position: relative;
-            transform-style: preserve-3d;
-            transition: transform 0.6s;
             cursor: pointer;
+            perspective: 1000px;
         }
-        .flashcard.flip {
-            transform: rotateY(180deg);
-        }
-        .flashcard-front, .flashcard-back {
-            position: absolute;
+        .flashcard-content {
             width: 100%;
             height: 100%;
+            position: absolute;
+            text-align: center;
             backface-visibility: hidden;
-            border: 1px solid #333;
             border-radius: 5px;
             display: flex;
             justify-content: center;
             align-items: center;
-            text-align: center;
+            padding: 20px;
         }
         .flashcard-front {
             background-color: #fff;
@@ -46,17 +50,20 @@
             background-color: #f0f0f0;
             transform: rotateY(180deg);
         }
+        .flashcard.flip .flashcard-content {
+            transform: rotateY(180deg);
+        }
     </style>
 </head>
 <body>
-    <h1>Flashcards</h1>
-    <div id="flashcards"></div>
+    <h1>Flashcards for Set: <span id="setName"></span></h1>
+    <div class="flashcard-container" id="flashcards"></div>
 
     <script>
-        // Manual query string parsing
+        // Manual query string parsing for compatibility
         function getQueryParams() {
             var params = {};
-            var queryString = window.location.search.substring(1); // Remove the "?" at the start
+            var queryString = window.location.search.substring(1); // Remove "?" from the URL
             var queries = queryString.split("&");
 
             for (var i = 0; i < queries.length; i++) {
@@ -68,16 +75,19 @@
 
         var queryParams = getQueryParams();
         var setName = queryParams['set'];
+        document.getElementById('setName').textContent = setName;
 
         var xhr = new XMLHttpRequest();
-        xhr.open('GET', 'flashcards.json', true);
+        xhr.open('GET', 'flashcards.json', true); // Adjust the path to your JSON file
         xhr.onreadystatechange = function () {
             if (xhr.readyState === 4 && xhr.status === 200) {
                 try {
-                    var flashcards = JSON.parse(xhr.responseText).sets;
-                    displayFlashcards(flashcards[setName]);
+                    var data = JSON.parse(xhr.responseText);
+                    var sets = data.sets || {};
+                    displayFlashcards(sets[setName]);
                 } catch (error) {
                     console.error('Error parsing JSON:', error);
+                    document.getElementById('flashcards').innerHTML = "Error loading flashcards.";
                 }
             }
         };
@@ -85,31 +95,29 @@
 
         function displayFlashcards(cards) {
             var flashcardsDiv = document.getElementById('flashcards');
-            if (cards) {
-                cards.forEach(function(card) {
-                    var flashcardContainer = document.createElement('div');
-                    flashcardContainer.className = 'flashcard-container';
-
+            if (cards && cards.length > 0) {
+                for (var i = 0; i < cards.length; i++) {
                     var flashcard = document.createElement('div');
                     flashcard.className = 'flashcard';
-
+                    
                     var front = document.createElement('div');
-                    front.className = 'flashcard-front';
-                    front.innerHTML = '<strong>Q:</strong> ' + card.question;
+                    front.className = 'flashcard-content flashcard-front';
+                    front.innerHTML = "<strong>Q:</strong> " + cards[i].question;
 
                     var back = document.createElement('div');
-                    back.className = 'flashcard-back';
-                    back.innerHTML = '<strong>A:</strong> ' + card.answer;
+                    back.className = 'flashcard-content flashcard-back';
+                    back.innerHTML = "<strong>A:</strong> " + cards[i].answer;
 
                     flashcard.appendChild(front);
                     flashcard.appendChild(back);
-                    flashcard.onclick = function() {
-                        flashcard.classList.toggle('flip');
-                    };
 
-                    flashcardContainer.appendChild(flashcard);
-                    flashcardsDiv.appendChild(flashcardContainer);
-                });
+                    // Flip functionality
+                    flashcard.addEventListener('click', function() {
+                        flashcard.classList.toggle('flip');
+                    });
+
+                    flashcardsDiv.appendChild(flashcard);
+                }
             } else {
                 flashcardsDiv.innerHTML = '<p>No flashcards available for this set.</p>';
             }
