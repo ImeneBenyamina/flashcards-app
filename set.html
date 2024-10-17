@@ -53,8 +53,21 @@
     <div id="flashcards"></div>
 
     <script>
-        var urlParams = new URLSearchParams(window.location.search);
-        var setName = urlParams.get('set');
+        // Manual query string parsing
+        function getQueryParams() {
+            var params = {};
+            var queryString = window.location.search.substring(1); // Remove the "?" at the start
+            var queries = queryString.split("&");
+
+            for (var i = 0; i < queries.length; i++) {
+                var pair = queries[i].split("=");
+                params[decodeURIComponent(pair[0])] = decodeURIComponent(pair[1] || "");
+            }
+            return params;
+        }
+
+        var queryParams = getQueryParams();
+        var setName = queryParams['set'];
 
         var xhr = new XMLHttpRequest();
         xhr.open('GET', 'flashcards.json', true);
