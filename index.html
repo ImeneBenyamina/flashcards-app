@@ -4,57 +4,66 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Flashcard Sets</title>
+    <link rel="stylesheet" href="styles.css">
     <style>
         body {
             font-family: Arial, sans-serif;
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            margin: 20px;
-        }
-        .set-card {
-            border: 1px solid #333;
-            border-radius: 5px;
-            margin: 10px;
+            margin: 0;
             padding: 20px;
-            text-align: center;
-            cursor: pointer;
-            width: 150px;
-            transition: background-color 0.3s;
+            background-color: #f9f9f9;
         }
-        .set-card:hover {
-            background-color: #f0f0f0;
+        .card {
+            padding: 20px;
+            margin: 10px;
+            border: 1px solid #ccc;
+            display: inline-block;
+            cursor: pointer;
+            border-radius: 5px;
+            text-align: center;
+            background-color: #fff;
+            transition: background-color 0.3s;
+            width: 150px;
+            box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.1);
+        }
+        .card:hover {
+            background-color: #e0e0e0;
         }
     </style>
 </head>
 <body>
-    <div id="sets"></div>
+    <h1>Flashcard Sets</h1>
+    <div id="flashcard-container"></div>
 
     <script>
-        const xhr = new XMLHttpRequest();
+        var flashcards = {};
+
+        // Fetch flashcards using XMLHttpRequest
+        var xhr = new XMLHttpRequest();
         xhr.open('GET', 'flashcards.json', true);
         xhr.onreadystatechange = function () {
             if (xhr.readyState === 4 && xhr.status === 200) {
                 try {
-                    const flashcards = JSON.parse(xhr.responseText).sets;
-                    displaySets(flashcards);
+                    flashcards = JSON.parse(xhr.responseText).sets;
+                    displaySets();
                 } catch (error) {
                     console.error('Error parsing JSON:', error);
                 }
+            } else if (xhr.readyState === 4) {
+                console.error('Error loading flashcards:', xhr.status);
             }
         };
         xhr.send();
 
-        function displaySets(flashcards) {
-            const setsDiv = document.getElementById('sets');
-            for (const set in flashcards) {
-                const card = document.createElement('div');
-                card.className = 'set-card';
-                card.innerText = set;
+        function displaySets() {
+            for (var setName in flashcards) {
+                var card = document.createElement('div');
+                card.className = 'card';
+                card.textContent = setName;
                 card.onclick = function() {
-                    window.location.href = `set.html?set=${encodeURIComponent(set)}`;
+                    var selectedSetName = this.textContent;
+                    window.location.href = 'set.html?set=' + encodeURIComponent(selectedSetName);
                 };
-                setsDiv.appendChild(card);
+                document.getElementById('flashcard-container').appendChild(card);
             }
         }
     </script>
