@@ -1,34 +1,134 @@
 {
     "sets": {
-        "Math": [
+        "Hour1": [
             {
-                "question": "What is 2 + 2?",
-                "answer": "4"
-            },
-            {
-                "question": "What is 5 x 6?",
-                "answer": "30"
-            }
+    "question": "TCP/IP standards?",
+    "answer": "System of rules defining communications on TCP/IP network"
+  },
+  {
+    "question": "TCP/IP Implementation?",
+    "answer": "Software components that enable the hardware to perform functions that participate in TCP/IP network."
+  },
+  {
+    "question": "TCP/IP 2 important features?",
+    "answer": "1- End-node verification.\n2- Dynamic routing."
+  },
+  {
+    "question": "RFC?",
+    "answer": "The Technical papers that serve as the official documentation for TCP/IP made by researchers and workgroups that try to improve the TCP/IP protocol."
+  },
+  {
+    "question": "IAB?",
+    "answer": "Internet Architecture Board (the administration)."
+  },
+  {
+    "question": "IETF?",
+    "answer": "Internet Engineering Task Force (researchers)."
+  },
+  {
+    "question": "IRTF?",
+    "answer": "Internet Research Task Force (sponsors)."
+  },
+  {
+    "question": "ICANN?",
+    "answer": "Internet Corporation For Assigned Names & Numbers."
+  }
         ],
-        "Geography": [
+        "Hour2": [
             {
-                "question": "What is the capital of France?",
-                "answer": "Paris"
-            },
-            {
-                "question": "What is the largest continent?",
-                "answer": "Asia"
-            }
+    "question": "TCP/IP responsibilities?",
+    "answer": "1- Dividing messages into chunks.\n2- Interfacing with network hardware adapter.\n3- Addressing distant specific device.\n4- Routing data to subnets.\n5- Error & Flow control, ACK.\n6- Accept data from app and pass it to network.\n7- Receive data from network and pass it to app."
+  },
+  {
+    "question": "Encapsulation?",
+    "answer": "Each layer on the sending machine adds a header with information that would help the layer on the receiving machine interpret data."
+  },
+  {
+    "question": "TCP/IP model layers?",
+    "answer": "1- App Layer.\n2- Transport Layer.\n3- Internet Layer.\n4- Network Access Layer."
+  },
+  {
+    "question": "App Layer role?",
+    "answer": "1- Enables programs written for OS environment to access the network.\n2- Provides apps for troubleshooting, file transfer, etc."
+  },
+  {
+    "question": "Transport Layer Role?",
+    "answer": "Error & Flow Control, Acknowledgment."
+  },
+  {
+    "question": "Internet Layer Role?",
+    "answer": "1- Logical, hardware-independent addressing.\n2- Relates physical address to logical address (ARP).\n3- Provides routing to reduce traffic."
+  },
+  {
+    "question": "Network Access Layer role?",
+    "answer": "1- Interface with network hardware.\n2- Formats data for transmission.\n3- Address data based on MACs.\n4- Error control.\n5- Link data transmission with the correct access method."
+  },
+  {
+    "question": "OSI model layers?",
+    "answer": "1- App Layer.\n2- Presentation Layer.\n3- Session Layer.\n4- Transport Layer.\n5- Network Layer.\n6- Data Link Layer.\n7- Physical Layer."
+  },
+  {
+    "question": "Presentation Layer role?",
+    "answer": "1- Data encryption.\n2- Data compression.\n3- Translates data to standard format."
+  },
+  {
+    "question": "Session Layer role?",
+    "answer": "Manages sessions between communicating apps."
+  },
+  {
+    "question": "Data Link Layer role?",
+    "answer": "1- Interface to hardware.\n2- Maintain logical links for subnets."
+  },
+  {
+    "question": "Physical Layer role?",
+    "answer": "Converts data to a stream of electric/analog pulses."
+  },
+  {
+    "question": "App Layer package name?",
+    "answer": "Message."
+  },
+  {
+    "question": "Transport Layer package name?",
+    "answer": "- Segment (TCP)\n- Datagram (UDP)"
+  },
+  {
+    "question": "Internet Layer package name?",
+    "answer": "Datagram."
+  },
+  {
+    "question": "Network Access Layer package name?",
+    "answer": "Frame."
+  },
+  {
+    "question": "TCP qualities?",
+    "answer": "- Guarantees the delivery of data.\n- Error & Flow control.\n- Slow."
+  },
+  {
+    "question": "UDP qualities?",
+    "answer": "- Unreliable (doesn't guarantee data delivery).\n- Fast.\n- Offloads error & flow control to app layer."
+  }
         ],
-        "Science": [
+        "Hour3": [
             {
-                "question": "What is H2O commonly known as?",
-                "answer": "Water"
-            },
-            {
-                "question": "What planet is known as the Red Planet?",
-                "answer": "Mars"
-            }
+    "question": "Data Link Layer functions?",
+    "answer": "- Media Access Control (MAC)\n- Logical Link Control (LLC)"
+  },
+  {
+    "question": "Architectures of Network Access Layer?",
+    "answer": "- IEEE 802.3 (Ethernet)\n- IEEE 802.11 (Wireless)\n- IEEE 802.16 (WiMax cellular)\n- PPP (Point-To-Point protocol)"
+  },
+  {
+    "question": "Network Architecture Specifications?",
+    "answer": "- Access method.\n- Data frame format.\n- Cabling type.\n- Cabling rules."
+  },
+  {
+    "question": "Ethernet Qualities?",
+    "answer": "- Inexpensive & Easily installed.\n- Uses (CSMA/CD) access method.\n- Good for light-moderate use.\n- Switches manage traffic to reduce collision."
+  },
+  {
+    "question": "Ethernet Frame components?",
+    "answer": "- Preamble (beginning of frame).\n- Recipient address.\n- Source address.\n- Optional VLAN tag.\n- Length (size of data).\n- Data.\n- FCS (Frame check sequence) using CRC (cyclical redundancy check)."
+  }
         ]
     }
 }
