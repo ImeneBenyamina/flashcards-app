@@ -94,10 +94,12 @@
                 flashcard.className = 'flashcard';
 
                 var questionText = document.createElement('div');
-                questionText.textContent = card.question;
+                questionText.innerHTML = card.question.replace(/\n/g, '<br>'); // Replace \n with <br>
 
                 var answerText = document.createElement('div');
-                answerText.textContent = card.answer;
+                // Split answers by newline and wrap each in <li>
+                var answers = card.answer.split('\n').map(answer => '<li>' + answer + '</li>').join('');
+                answerText.innerHTML = '<ul>' + answers + '</ul>'; // Use <ul> for lists
                 answerText.className = 'hidden'; // Initially hide the answer
 
                 flashcard.appendChild(questionText);
