@@ -41,17 +41,18 @@
     <div class="set-container" id="set-container"></div>
 
     <script>
+        // Function to fetch sets from the JSON file
         function fetchSets(callback) {
             var xhr = new XMLHttpRequest();
             xhr.open('GET', 'flashcards.json', true);
             xhr.onreadystatechange = function() {
                 if (xhr.readyState === 4) {
                     if (xhr.status === 200) {
-                        var flashcardsData = JSON.parse(xhr.responseText);
-                        callback(Object.keys(flashcardsData)); // Return the set names as an array
+                        var data = JSON.parse(xhr.responseText);
+                        callback(data.sets); // Call the callback with the sets data
                     } else {
-                        console.error('Error fetching flashcard sets:', xhr.statusText);
-                        callback([]); // Return an empty array if there's an error
+                        console.error('Error fetching sets:', xhr.statusText);
+                        callback({}); // Return an empty object if there's an error
                     }
                 }
             };
@@ -60,18 +61,20 @@
 
         function displaySets(sets) {
             var container = document.getElementById('set-container');
-            sets.forEach(function(set) {
+            for (var setName in sets) {
                 var card = document.createElement('div');
                 card.className = 'set-card';
-                card.innerHTML = set;
-                card.onclick = function() {
-                    window.location.href = 'set.html?set=' + encodeURIComponent(set);
-                };
+                card.innerHTML = setName; // Display the name of the set
+                card.onclick = function(name) {
+                    return function() {
+                        window.location.href = 'set.html?set=' + encodeURIComponent(name);
+                    };
+                }(setName);
                 container.appendChild(card);
-            });
+            }
         }
 
-        // Fetch the sets and display them
+        // Fetch sets and display them
         fetchSets(function(sets) {
             displaySets(sets);
         });

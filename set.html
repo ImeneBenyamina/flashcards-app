@@ -67,16 +67,15 @@
         var setName = queryParams['set'];
         document.getElementById('set-name').textContent = 'Flashcards for Set: ' + setName;
 
-        // Function to fetch flashcards from a JSON file using XMLHttpRequest
+        // Function to fetch flashcards from the JSON file
         function fetchFlashcards(callback) {
             var xhr = new XMLHttpRequest();
             xhr.open('GET', 'flashcards.json', true);
             xhr.onreadystatechange = function() {
                 if (xhr.readyState === 4) {
                     if (xhr.status === 200) {
-                        // Parse the JSON and call the callback function
                         var flashcardsData = JSON.parse(xhr.responseText);
-                        callback(flashcardsData);
+                        callback(flashcardsData.sets); // Pass only the sets part of the data
                     } else {
                         console.error('Error fetching flashcards:', xhr.statusText);
                         callback({}); // Return an empty object if there's an error
