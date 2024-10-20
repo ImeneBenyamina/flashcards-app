@@ -4,47 +4,61 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Flashcard Sets</title>
-<style>
-    body {
-        font-family: Arial, sans-serif;
-        display: flex;
-        flex-wrap: wrap;
-        align-items: center;
-        margin: 20px;
-    }
-    .set-container {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: center; /* Centers the sets horizontally */
-        align-items: center;
-        gap: 20px;
-    }
-    .set-card {
-        border: 1px solid #333;
-        border-radius: 5px;
-        padding: 20px;
-        margin: 10px;
-        width: 200px;
-        text-align: center;
-        cursor: pointer;
-        background-color: #f8f8f8;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        transition: transform 0.3s ease;
-    }
-    .set-card:hover {
-        transform: scale(1.05);
-    }
-</style>
-
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            margin: 20px;
+        }
+        .set-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center; /* Centers the sets horizontally */
+            align-items: center;
+            gap: 20px;
+        }
+        .set-card {
+            border: 1px solid #333;
+            border-radius: 5px;
+            padding: 20px;
+            margin: 10px;
+            width: 200px;
+            text-align: center;
+            cursor: pointer;
+            background-color: #f8f8f8;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+        .set-card:hover {
+            transform: scale(1.05);
+        }
+    </style>
 </head>
 <body>
     <h1>Flashcard Sets</h1>
     <div class="set-container" id="set-container"></div>
 
     <script>
-        var sets = ['Hour1', 'Hour2', 'Hour3']; // Example sets
-        
-        function displaySets() {
+        function fetchSets(callback) {
+            var xhr = new XMLHttpRequest();
+            xhr.open('GET', 'flashcards.json', true);
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState === 4) {
+                    if (xhr.status === 200) {
+                        var flashcardsData = JSON.parse(xhr.responseText);
+                        callback(Object.keys(flashcardsData)); // Return the set names as an array
+                    } else {
+                        console.error('Error fetching flashcard sets:', xhr.statusText);
+                        callback([]); // Return an empty array if there's an error
+                    }
+                }
+            };
+            xhr.send();
+        }
+
+        function displaySets(sets) {
             var container = document.getElementById('set-container');
             sets.forEach(function(set) {
                 var card = document.createElement('div');
@@ -57,7 +71,10 @@
             });
         }
 
-        displaySets();
+        // Fetch the sets and display them
+        fetchSets(function(sets) {
+            displaySets(sets);
+        });
     </script>
 </body>
 </html>

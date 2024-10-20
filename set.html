@@ -4,122 +4,119 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Flashcards Set</title>
-        <style>
-    body {
-        font-family: Arial, sans-serif;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        margin: 20px;
-    }
-    .flashcard-container {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: center; /* Centers the flashcards horizontally */
-        gap: 20px;
-    }
-    .flashcard {
-        width: 200px;
-        height: 150px;
-        margin: 10px;
-        border: 1px solid #333;
-        border-radius: 5px;
-        text-align: center;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        padding: 20px;
-        cursor: pointer;
-        background-color: #f8f8f8;
-        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        transition: transform 0.3s ease;
-    }
-    .flashcard:hover {
-        transform: scale(1.05);
-    }
-    .hidden {
-        display: none;
-    }
-    h1 {
-        margin-bottom: 20px;
-    }
-</style>
-
-    
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 20px;
+        }
+        .flashcard-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center; /* Centers the flashcards horizontally */
+            gap: 20px;
+        }
+        .flashcard {
+            width: 200px;
+            height: 150px;
+            margin: 10px;
+            border: 1px solid #333;
+            border-radius: 5px;
+            text-align: center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            cursor: pointer;
+            background-color: #f8f8f8;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+        .flashcard:hover {
+            transform: scale(1.05);
+        }
+        .hidden {
+            display: none;
+        }
+        h1 {
+            margin-bottom: 20px;
+        }
+    </style>
 </head>
 <body>
     <h1 id="set-name">Flashcards for Set</h1>
     <div class="flashcard-container" id="flashcards"></div>
 
-<script>
-    // Manual query string parsing for compatibility with older browsers
-    function getQueryParams() {
-        var params = {};
-        var queryString = window.location.search.substring(1);
-        var queries = queryString.split("&");
+    <script>
+        // Manual query string parsing for compatibility with older browsers
+        function getQueryParams() {
+            var params = {};
+            var queryString = window.location.search.substring(1);
+            var queries = queryString.split("&");
 
-        for (var i = 0; i < queries.length; i++) {
-            var pair = queries[i].split("=");
-            params[decodeURIComponent(pair[0])] = decodeURIComponent(pair[1] || "");
-        }
-        return params;
-    }
-
-    var queryParams = getQueryParams();
-    var setName = queryParams['set'];
-    document.getElementById('set-name').textContent = 'Flashcards for Set: ' + setName;
-
-    // Function to fetch flashcards from a JSON file using XMLHttpRequest
-    function fetchFlashcards(callback) {
-        var xhr = new XMLHttpRequest();
-        xhr.open('GET', 'flashcards.json', true);
-        xhr.onreadystatechange = function() {
-            if (xhr.readyState === 4) {
-                if (xhr.status === 200) {
-                    // Parse the JSON and call the callback function
-                    var flashcardsData = JSON.parse(xhr.responseText);
-                    callback(flashcardsData);
-                } else {
-                    console.error('Error fetching flashcards:', xhr.statusText);
-                    callback({}); // Return an empty object if there's an error
-                }
+            for (var i = 0; i < queries.length; i++) {
+                var pair = queries[i].split("=");
+                params[decodeURIComponent(pair[0])] = decodeURIComponent(pair[1] || "");
             }
-        };
-        xhr.send();
-    }
+            return params;
+        }
 
-    function displayFlashcards(flashcardsData, setName) {
-        var flashcards = flashcardsData[setName] || [];
-        var flashcardsDiv = document.getElementById('flashcards');
+        var queryParams = getQueryParams();
+        var setName = queryParams['set'];
+        document.getElementById('set-name').textContent = 'Flashcards for Set: ' + setName;
 
-        flashcards.forEach(function(card) {
-            var flashcard = document.createElement('div');
-            flashcard.className = 'flashcard';
+        // Function to fetch flashcards from a JSON file using XMLHttpRequest
+        function fetchFlashcards(callback) {
+            var xhr = new XMLHttpRequest();
+            xhr.open('GET', 'flashcards.json', true);
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState === 4) {
+                    if (xhr.status === 200) {
+                        // Parse the JSON and call the callback function
+                        var flashcardsData = JSON.parse(xhr.responseText);
+                        callback(flashcardsData);
+                    } else {
+                        console.error('Error fetching flashcards:', xhr.statusText);
+                        callback({}); // Return an empty object if there's an error
+                    }
+                }
+            };
+            xhr.send();
+        }
 
-            var questionText = document.createElement('div');
-            questionText.textContent = card.question;
+        function displayFlashcards(flashcardsData, setName) {
+            var flashcards = flashcardsData[setName] || [];
+            var flashcardsDiv = document.getElementById('flashcards');
 
-            var answerText = document.createElement('div');
-            answerText.textContent = card.answer;
-            answerText.className = 'hidden'; // Initially hide the answer
+            flashcards.forEach(function(card) {
+                var flashcard = document.createElement('div');
+                flashcard.className = 'flashcard';
 
-            flashcard.appendChild(questionText);
-            flashcard.appendChild(answerText);
+                var questionText = document.createElement('div');
+                questionText.textContent = card.question;
 
-            flashcard.addEventListener('click', function() {
-                questionText.classList.toggle('hidden');
-                answerText.classList.toggle('hidden');
+                var answerText = document.createElement('div');
+                answerText.textContent = card.answer;
+                answerText.className = 'hidden'; // Initially hide the answer
+
+                flashcard.appendChild(questionText);
+                flashcard.appendChild(answerText);
+
+                flashcard.addEventListener('click', function() {
+                    questionText.classList.toggle('hidden');
+                    answerText.classList.toggle('hidden');
+                });
+
+                flashcardsDiv.appendChild(flashcard);
             });
+        }
 
-            flashcardsDiv.appendChild(flashcard);
+        // Fetch the flashcards and display them
+        fetchFlashcards(function(flashcardsData) {
+            displayFlashcards(flashcardsData, setName);
         });
-    }
-
-    // Fetch the flashcards and display them
-    fetchFlashcards(function(flashcardsData) {
-        displayFlashcards(flashcardsData, setName);
-    });
-</script>
-
+    </script>
 </body>
 </html>
