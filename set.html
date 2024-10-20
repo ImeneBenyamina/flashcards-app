@@ -94,10 +94,10 @@
                 flashcard.className = 'flashcard';
 
                 var questionText = document.createElement('div');
-                questionText.innerHTML = card.question.replace(/\n/g, '<br>'); // Replace \n with <br>
+                questionText.textContent = card.question;
 
                 var answerText = document.createElement('div');
-                answerText.innerHTML = card.answer.replace(/\n/g, '<br>'); // Replace \n with <br>
+                answerText.textContent = card.answer;
                 answerText.className = 'hidden'; // Initially hide the answer
 
                 flashcard.appendChild(questionText);
